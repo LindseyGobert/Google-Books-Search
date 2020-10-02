@@ -1,9 +1,25 @@
-import axios from "axios";
+const API = {
+  getSaved: async function() {
+      let data = await fetch('/api/books/',{
+          method: 'GET'
+      }).then(response => response.json());
+      return data;
+  },
+  saveItem: function(data) {
+      fetch('/api/books/',{
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: {
+          'Content-Type': 'application/json'
 
-// The getBooks method retrieves recipes from the server
-// It accepts a "query" or term to search the recipe api for
-export default {
-  getBooks: function(query) {
-    return axios.get("/api/books", { params: { q: query } });
+          },
+      }).then(response => response.json());
+  },
+  deleteItem: function(id) {
+      fetch(`/api/books/${id}`,{
+          method: 'DELETE',
+      }).then(response => response.json());
   }
-};
+}
+
+export default API;
